@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "parse": "node scripts/parse-codenrock.cjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -40,6 +41,7 @@
     "@reduxjs/toolkit": "^2.11.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.1",
+    "@types/puppeteer": "^5.4.7",
     "@vercel/analytics": "1.6.1",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
@@ -51,6 +53,7 @@
     "lucide-react": "^0.564.0",
     "next": "^16.2.4",
     "next-themes": "^0.4.6",
+    "puppeteer": "^24.43.1",
     "radix-ui": "^1.4.3",
     "react": "^19",
     "react-day-picker": "9.13.2",
