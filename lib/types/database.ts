@@ -26,28 +26,27 @@ export interface Organizer {
 
 export interface Hackathon {
   id: string
-  organizer_id: string | null
   title: string
   description: string
-  short_description: string | null
-  image_url: string | null
-  format: HackathonFormat
-  location: string | null
+  short_description?: string
+  prize_pool?: string
   start_date: string
   end_date: string
-  registration_deadline: string | null
-  min_team_size: number
-  max_team_size: number
-  prize_pool: string | null
-  prize_amount: number | null
-  tech_stack: string[]
-  tags: string[]
-  website_url: string | null
-  status: HackathonStatus
-  source: string | null
-  is_featured: boolean
+  status: string
+  format: string
+  location?: string
+  image_url?: string
+  source_url?: string
+  min_team_size?: number
+  max_team_size?: number
+  source?: string
+  is_featured?: boolean
+  hackathon_tech_stack?: Array<{
+    id: number
+    name: string
+    category: string
+  }>
   created_at: string
-  updated_at: string
 }
 
 export interface Favorite {

@@ -20,18 +20,21 @@ export function HackathonsPageClient({ initialHackathons, userId }: HackathonsPa
       if (filters.search) {
         const searchLower = filters.search.toLowerCase()
         const matchesTitle = hackathon.title.toLowerCase().includes(searchLower)
-        const matchesDescription = hackathon.description.toLowerCase().includes(searchLower)
-        const matchesTech = hackathon.tech_stack?.some(t => t.toLowerCase().includes(searchLower))
+        const matchesDescription = hackathon.description?.toLowerCase().includes(searchLower) || false
+        // Ищем в технологиях (новое поле)
+        const matchesTech = hackathon.hackathon_tech_stack?.some(t =>
+            t.name.toLowerCase().includes(searchLower)
+        ) || false
         if (!matchesTitle && !matchesDescription && !matchesTech) return false
       }
 
       // Format filter
       if (filters.format && hackathon.format !== filters.format) return false
 
-      // Tech stack filter
+      // Tech stack filter (исправлено)
       if (filters.tech_stack && filters.tech_stack.length > 0) {
         const hasMatchingTech = filters.tech_stack.some(tech =>
-          hackathon.tech_stack?.includes(tech)
+            hackathon.hackathon_tech_stack?.some(t => t.name === tech)
         )
         if (!hasMatchingTech) return false
       }
@@ -39,7 +42,7 @@ export function HackathonsPageClient({ initialHackathons, userId }: HackathonsPa
       // Tags filter
       if (filters.tags && filters.tags.length > 0) {
         const hasMatchingTag = filters.tags.some(tag =>
-          hackathon.tags?.includes(tag)
+            hackathon.tags?.includes(tag)
         )
         if (!hasMatchingTag) return false
       }
@@ -66,25 +69,25 @@ export function HackathonsPageClient({ initialHackathons, userId }: HackathonsPa
   }, [initialHackathons, filters])
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Все хакатоны</h1>
-        <p className="text-muted-foreground">
-          Найдено {filteredHackathons.length} из {initialHackathons.length} хакатонов
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8">
-        <aside className="lg:w-80 flex-shrink-0">
-          <FilterSidebar />
-        </aside>
-        <div className="flex-1">
-          <HackathonFeed 
-            initialHackathons={filteredHackathons} 
-            userId={userId}
-          />
+      <main className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-2">Все хакатоны</h1>
+          <p className="text-muted-foreground">
+            Найдено {filteredHackathons.length} из {initialHackathons.length} хакатонов
+          </p>
         </div>
-      </div>
-    </main>
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          <aside className="lg:w-80 flex-shrink-0">
+            <FilterSidebar />
+          </aside>
+          <div className="flex-1">
+            <HackathonFeed
+                initialHackathons={filteredHackathons}
+                userId={userId}
+            />
+          </div>
+        </div>
+      </main>
   )
 }
